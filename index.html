@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>$40 A Day</title>
+    <style type="text/css">
+        html {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            width: 512px;
+            height: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        input {
+            width: 4em;
+            text-align: right;
+        }
+
+        .weekly::after {
+            content: "/week";
+        }
+        .weekly::before {
+            content: "$";
+        }
+
+        .monthly::after {
+            content: "/month";
+        }
+        .monthly::before {
+            content: "$";
+        }
+
+        .yearly::after {
+            content: "/yearly";
+        }
+        .yearly::before {
+            content: "$";
+        }
+    </style>
+</head>
+<body>
+    <h1>What does your budget look like at $40 a day?</h1>
+    <button onclick="javascipt:clearAll();">Reset To Zero</button>
+    <table>
+        <tr><th colspan="2">Basics</th></tr>
+        <tr><td>Rent</td><td><span class="weekly"><input type="number" min="0" step="1" value="150"></span></td></tr>
+        <tr><td>Food</td><td><span class="weekly"><input type="number" min="0" step="1" value="100"></span></td></tr>
+        <tr><td>Contents Insurance</td><td><span class="yearly"><input type="number" min="0" step="1" value="0"></span></td></tr>
+        <tr><th colspan="2">Health</th></tr>
+        <tr><td>Dental</td><td><span class="yearly"><input type="number" min="0" step="1" value="0"></span></td></tr>
+        <tr><td>Health Insurance</td><td><span class="yearly"><input type="number" min="0" step="1" value="0"></span></td></tr>
+        <tr><td>Medication</td><td><span class="monthly"><input type="number" min="0" step="1" value="20"></span></td></tr>
+        <tr><th colspan="2">Utilities</th></tr>
+        <tr><td>Power</td><td><span class="monthly"><input type="number" min="0" step="1" value="60"></span></td></tr>
+        <tr><td>Water</td><td><span class="monthly"><input type="number" min="0" step="1" value="20"></span></td></tr>
+        <tr><td>Gas</td><td><span class="monthly"><input type="number" min="0" step="1" value="0"></span></td></tr>
+        <tr><td>Phone</td><td><span class="monthly"><input type="number" min="0" step="1" value="50"></span></td></tr>
+        <tr><td>Internet</td><td><span class="monthly"><input type="number" min="0" step="1" value="30"></span></td></tr>
+        <tr><th colspan="2">Transport</th></tr>
+        <tr><td>Vehicle Rego</td><td><span class="yearly"><input type="number" min="0" step="1" value="700"></span></td></tr>
+        <tr><td>Vehicle Insurance</td><td><span class="yearly"><input type="number" min="0" step="1" value="0"></span></td></tr>
+        <tr><td>Services</td><td><span class="yearly"><input type="number" min="0" step="1" value="0"></span></td></tr>
+        <tr><td>Petrol</td><td><span class="weekly"><input type="number" min="0" step="1" value="30"></span></td></tr>
+        <tr><td>Public Transport</td><td><span class="weekly"><input type="number" min="0" step="1" value="30"></span></td></tr>
+        <tr><th colspan="2">Lifestyle and Entertainment</th></tr>
+        <tr><td>Clothing</td><td><span class="yearly"><input type="number" min="0" step="1" value="150"></span></td></tr>
+        <tr><td>Hobbies</td><td><span class="monthly"><input type="number" min="0" step="1" value="20"></span></td></tr>
+        <tr><td>Streaming Services</td><td><span class="monthly"><input type="number" min="0" step="1" value="12"></span></td></tr>
+        <tr><td>Social Events</td><td><span class="monthly"><input type="number" min="0" step="1" value="15"></span></td></tr>
+        <tr><th colspan="2">Other</th></tr>
+        <tr><td>Donations</td><td><span class="yearly"><input type="number" min="0" step="1" value="200"></span></td></tr>
+        <tr><td>General Savings</td><td><span class="weekly"><input type="number" min="0" step="1" value="0"></span></td></tr>
+        <tr><td>Emergency Fund</td><td><span class="weekly"><input type="number" min="0" step="1" value="0"></span></td></tr>
+    </table>
+
+    <h2>Your budget averages $<span id="weeklybudget">40</span> a day.</h2>
+
+    <div class="disclaimer">
+        DISCLAIMER: This page is not a budgetting tool or financial advice.
+        It highlights the decisions people have to make in order to be able to afford to live on $40 a day.
+        It does not take into account the timings for expenses (like rego and insurance happening at the same time and then getting slapped with a fine a month later).
+        <br><br>
+        The initial values are rough approximations of what my budget was years ago while I was studying and living in a share house.
+        <br><br>
+        For financial advice speak to a qualified Financial Advisor.
+    </div>
+
+    <div class="footer">
+            Made by <a href="https://www.pommers.org/">MitchPommers</a>. You can find him on <a href="https://twitter.com/MitchPommers">Twitter</a>.
+    </div>
+
+
+    <script>
+        function clearAll() {
+            inputs = document.querySelectorAll("input");
+            for (var inputId = 0; inputId < inputs.length; inputId++) {
+                inputs[inputId].value=0;
+            }
+            updateBudget();
+        }
+        
+        function updateBudget() {
+            var weeklybudget = 0;
+            
+            var weeklyExpenses = document.getElementsByClassName("weekly");
+            for (var expenseId = 0; expenseId < weeklyExpenses.length; expenseId++) {
+                var expense = Math.ceil(weeklyExpenses[expenseId].querySelector("input").value)/7;
+                weeklybudget += expense;
+            }
+
+            var monthlyExpenses = document.getElementsByClassName("monthly");
+            for (var expenseId = 0; expenseId < monthlyExpenses.length; expenseId++) {
+                var expense = Math.ceil(monthlyExpenses[expenseId].querySelector("input").value)/30;
+                weeklybudget += expense;
+            }
+
+            var yearlyExpenses = document.getElementsByClassName("yearly");
+            for (var expenseId = 0; expenseId < yearlyExpenses.length; expenseId++) {
+                var expense = Math.ceil(yearlyExpenses[expenseId].querySelector("input").value)/365;
+                weeklybudget += expense;
+            }
+
+            weeklybudget = weeklybudget.toFixed(2);
+            document.getElementById("weeklybudget").innerText = weeklybudget;
+
+            if (weeklybudget >= 40) {
+                document.getElementById("weeklybudget").style.color = "red";
+            }
+            else {
+                document.getElementById("weeklybudget").style.color = "black";
+            }
+        }
+
+        var allInputs = document.querySelectorAll("input");
+        for (var inputId = 0; inputId < allInputs.length; inputId++) {
+            allInputs[inputId].onchange = updateBudget;
+        }
+
+        updateBudget();
+    </script>
+
+</body>
+</html>
