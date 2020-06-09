@@ -17,9 +17,13 @@
             margin-right: auto;
         }
 
-        input {
-            width: 4em;
+        input[type="number"] {
+            width: 3em;
             text-align: right;
+        }
+        input[type="text"] {
+            width: 12em;
+            text-align: left;
         }
 
         .weekly::after {
@@ -50,6 +54,7 @@
     <table>
         <tr><th colspan="2">Basics</th></tr>
         <tr><td>Rent</td><td><span class="weekly"><input type="number" min="0" step="1" value="150"></span></td></tr>
+        <tr><td>Loans</td><td><span class="weekly"><input type="number" min="0" step="1" value="0"></span></td></tr>
         <tr><td>Food</td><td><span class="weekly"><input type="number" min="0" step="1" value="100"></span></td></tr>
         <tr><td>Contents Insurance</td><td><span class="yearly"><input type="number" min="0" step="1" value="0"></span></td></tr>
         <tr><th colspan="2">Health</th></tr>
@@ -70,6 +75,7 @@
         <tr><td>Public Transport</td><td><span class="weekly"><input type="number" min="0" step="1" value="30"></span></td></tr>
         <tr><th colspan="2">Lifestyle and Entertainment</th></tr>
         <tr><td>Clothing</td><td><span class="yearly"><input type="number" min="0" step="1" value="150"></span></td></tr>
+        <tr><td>Sports</td><td><span class="monthly"><input type="number" min="0" step="1" value="0"></span></td></tr>
         <tr><td>Hobbies</td><td><span class="monthly"><input type="number" min="0" step="1" value="20"></span></td></tr>
         <tr><td>Streaming Services</td><td><span class="monthly"><input type="number" min="0" step="1" value="12"></span></td></tr>
         <tr><td>Social Events</td><td><span class="monthly"><input type="number" min="0" step="1" value="15"></span></td></tr>
@@ -77,9 +83,14 @@
         <tr><td>Donations</td><td><span class="yearly"><input type="number" min="0" step="1" value="200"></span></td></tr>
         <tr><td>General Savings</td><td><span class="weekly"><input type="number" min="0" step="1" value="0"></span></td></tr>
         <tr><td>Emergency Fund</td><td><span class="weekly"><input type="number" min="0" step="1" value="0"></span></td></tr>
+        <tr><td><input type="text" value="Other 1"></td><td><span class="monthly"><input type="number" min="0" step="1" value="0"></span></td></tr>
+        <tr><td><input type="text" value="Other 2"></td><td><span class="monthly"><input type="number" min="0" step="1" value="0"></span></td></tr>
+        <tr><td><input type="text" value="Other 3"></td><td><span class="monthly"><input type="number" min="0" step="1" value="0"></span></td></tr>
+        <tr><td><input type="text" value="Other 4"></td><td><span class="monthly"><input type="number" min="0" step="1" value="0"></span></td></tr>
     </table>
 
-    <h2>Your budget averages $<span id="weeklybudget">40</span> a day.</h2>
+    <h2>Your budget averages $<span id="dailybudget">40</span> a day.</h2>
+    <a href="https://twitter.com/intent/tweet?text=I%20checked%20what%20my%20daily%20budget%20was%20on%20https%3A//www.pommers.org/40dollarsaday/" id="tweetbutton">Share on Twitter</a>
 
     <div class="disclaimer">
         DISCLAIMER: This page is not a budgetting tool or financial advice.
@@ -106,35 +117,39 @@
         }
         
         function updateBudget() {
-            var weeklybudget = 0;
+            var dailybudget = 0;
             
             var weeklyExpenses = document.getElementsByClassName("weekly");
             for (var expenseId = 0; expenseId < weeklyExpenses.length; expenseId++) {
                 var expense = Math.ceil(weeklyExpenses[expenseId].querySelector("input").value)/7;
-                weeklybudget += expense;
+                dailybudget += expense;
             }
 
             var monthlyExpenses = document.getElementsByClassName("monthly");
             for (var expenseId = 0; expenseId < monthlyExpenses.length; expenseId++) {
                 var expense = Math.ceil(monthlyExpenses[expenseId].querySelector("input").value)/30;
-                weeklybudget += expense;
+                dailybudget += expense;
             }
 
             var yearlyExpenses = document.getElementsByClassName("yearly");
             for (var expenseId = 0; expenseId < yearlyExpenses.length; expenseId++) {
                 var expense = Math.ceil(yearlyExpenses[expenseId].querySelector("input").value)/365;
-                weeklybudget += expense;
+                dailybudget += expense;
             }
 
-            weeklybudget = weeklybudget.toFixed(2);
-            document.getElementById("weeklybudget").innerText = weeklybudget;
+            dailybudget = dailybudget.toFixed(2);
+            document.getElementById("dailybudget").innerText = dailybudget;
 
-            if (weeklybudget >= 40) {
-                document.getElementById("weeklybudget").style.color = "red";
+            if (dailybudget >= 40) {
+                document.getElementById("dailybudget").style.color = "red";
             }
             else {
-                document.getElementById("weeklybudget").style.color = "black";
+                document.getElementById("dailybudget").style.color = "black";
             }
+
+
+            var tweetLink = "https://twitter.com/intent/tweet?text=" + encodeURIComponent("My budget comes out to $" + dailybudget + " a day. See what yours is here: https://www.pommers.org/40dollarsaday/")
+            document.getElementById("tweetbutton").href = tweetLink;
         }
 
         var allInputs = document.querySelectorAll("input");
