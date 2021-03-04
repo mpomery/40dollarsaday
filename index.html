@@ -1,9 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>$40 A Day</title>
+    <title>$44 A Day</title>
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style type="text/css">
+        html, body {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            background: #DDDDDD;
+        }
+
         input[type="number"] {
             width: 3em;
             text-align: right;
@@ -34,11 +47,36 @@
         .yearly::before {
             content: "$";
         }
+
+        .update {
+            border: 1px solid #FF0000;
+            padding: 10px;
+            margin: 5px;
+        }
+
+        .disclaimer {
+            border: 1px solid #000000;
+            padding: 10px;
+            margin: 5px;
+        }
+
+        .disclaimer {
+            border: 1px solid #000000;
+            padding: 10px;
+            margin: 5px;
+        }
+
+        .footer {
+            border: 1px solid #999999;
+            padding: 10px;
+            margin: 5px;
+            text-align: center;
+        }
+
     </style>
 </head>
 <body>
-    <h1>What does your budget look like at $40 a day?</h1>
-    <button onclick="javascipt:clearAll();">Reset To Zero</button>
+    <h1>What does your budget look like at $44 a day?</h1>
     <table>
         <tr><th colspan="2">Basics</th></tr>
         <tr><td>Rent</td><td><span class="weekly"><input type="number" min="0" step="1" value="150"></span></td></tr>
@@ -76,20 +114,29 @@
         <tr><td><input type="text" value="Other 3"></td><td><span class="monthly"><input type="number" min="0" step="1" value="0"></span></td></tr>
         <tr><td><input type="text" value="Other 4"></td><td><span class="monthly"><input type="number" min="0" step="1" value="0"></span></td></tr>
     </table>
-
-    <h2>Your budget averages $<span id="dailybudget">40</span> a day.</h2>
-    <a href="https://twitter.com/intent/tweet?text=I%20checked%20what%20my%20daily%20budget%20was%20on%20https%3A//www.pommers.org/40dollarsaday/" id="tweetbutton">Share on Twitter</a>
-    <br><br>
+    <h2>Your budget averages $<span id="dailybudget">44</span> a day - <a href="https://twitter.com/intent/tweet?text=I%20checked%20what%20my%20daily%20budget%20was%20on%20https%3A//www.pommers.org/40dollarsaday/" id="tweetbutton">Share on Twitter</a></h2>
+    <button onclick="javascipt:clearAll();">Reset All To Zero</button><br />
+    <br />
+    <div class="update">
+        <strong>Update 2021-03-04</strong>: With the federal government increasing JobSeeker by a mere $25 a week, I have updated this calculator to the $44 a day it averages out to.<br />
+        <br />
+        Read More:
+        <ul>
+                <li><a href="https://www.80aday.org/">Break The Poverty Machine - join the campaign for #80aDay</a></li>
+                <li><a href="https://www.abc.net.au/news/2021-02-24/unemployed-worry-coronavirus-supplement-cut-with-jobseeker-rise/13185304"> JobSeeker rate rise still leaves unemployed people worried about life after the coronavirus supplement (ABC News)</a></li>
+                <li><a href="https://www.theguardian.com/australia-news/2021/feb/23/jobseeker-welfare-groups-say-50-a-fortnight-rise-a-heartless-betrayal">Jobseeker: welfare groups say $50-a-fortnight rise a 'heartless betrayal' (The Guardian)</a></li>
+                <li><a href="https://www.sbs.com.au/news/jobseeker-boost-of-3-57-a-day-is-a-heartless-betrayal-of-unemployed-australians-welfare-advocates-say">JobSeeker boost of $3.57 a day is 'a heartless betrayal' of unemployed Australians, welfare advocates say (SBS News)</a></li>
+        </ul>
+    </div>
     <div class="disclaimer">
         DISCLAIMER: This page is not a budgetting tool or financial advice.
-        It highlights the decisions people have to make in order to be able to afford to live on $40 a day.
+        It highlights the decisions people have to make in order to be able to afford to live on $44 a day.
         It does not take into account the timings for expenses (like rego and insurance happening at the same time and then getting slapped with a fine a month later).
         <br><br>
-        The initial values are rough approximations of what my budget was years ago while I was studying and living in a share house.
+        The initial values are rough approximations of what my budget was years ago while I was studying and living in a share house in 2014/15.
         <br><br>
-        For financial advice speak to a qualified Financial Advisor.
+        <strong>For financial advice speak to a qualified Financial Advisor.</strong>
     </div>
-    <br><br>
     <div class="footer">
             Made by <a href="https://www.pommers.org/">MitchPommers</a>. You can find him on <a href="https://twitter.com/MitchPommers">Twitter</a>.
     </div>
@@ -128,7 +175,7 @@
             dailybudget = dailybudget.toFixed(2);
             document.getElementById("dailybudget").innerText = dailybudget;
 
-            if (dailybudget >= 40) {
+            if (dailybudget >= 44) {
                 document.getElementById("dailybudget").style.color = "red";
             }
             else {
